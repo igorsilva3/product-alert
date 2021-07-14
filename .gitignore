@@ -121,7 +121,7 @@ dist
 *.db
 *.sqlite
 *.sqlite3
-*.sql
+.sql
 
 # VSCode
 .vscode

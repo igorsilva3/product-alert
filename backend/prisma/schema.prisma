@@ -11,26 +11,26 @@ generator client {
 }
 
 model User {
-  id        String    @id @default(uuid())
-  firstName String    @map("first_name")
-  lastName  String    @map("last_name")
-  email     String    @unique
+  id        String   @id @default(uuid())
+  firstName String   @map("first_name")
+  lastName  String   @map("last_name")
+  email     String   @unique
   password  String
-  createdAt DateTime  @map("created_at") @default(now())
-  updatedAt DateTime  @map("updated_at") @default(now())
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @default(now()) @map("updated_at")
 
   @@map("users")
 }
 
-// model Product {
-//   id             String   @id @default(uuid())
-//   name           String
-//   company        String
-//   expirationDate DateTime @map("expiration_date")
-//   amount         Int
-//   userId         String   @map("user_id")
-//   createdAt      DateTime @map("created_at")
-//   updatedAt      DateTime @map("updated_at")
+model Product {
+  id             String   @id @default(uuid())
+  name           String
+  company        String
+  expirationDate DateTime @map("expiration_date")
+  amount         Int
+  userId         String   @map("user_id")
+  createdAt      DateTime @default(now()) @map("created_at")
+  updatedAt      DateTime @default(now()) @map("updated_at")
 
-//   @@map("products")
-// }
+  @@map("products")
+}
