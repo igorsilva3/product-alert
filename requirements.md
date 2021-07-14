@@ -5,7 +5,7 @@ Requisitos
 
 - [] CRUD de usuarios
 - [] CRUD de produtos
-- [] Relacionamento de usuarios com produtos
+- [x] Relacionamento de usuarios com produtos
 - [] Autenticação de usuarios
 - [] Recuperação de senha
 - [] Relatorio dos produtos com validade recentes
