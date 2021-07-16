@@ -1,4 +1,3 @@
-import helloWorldController from './helloWorldController'
-import  UserController  from './UserController'
+import UserController from './UserController'
 
-export { helloWorldController, UserController}
+export { UserController }
