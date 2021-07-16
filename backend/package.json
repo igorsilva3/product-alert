@@ -17,6 +17,7 @@
     "@types/yup": "^0.29.12",
     "fake": "^0.2.2",
     "jest": "^27.0.6",
+    "jest-mock-extended": "^1.0.18",
     "prisma": "^2.27.0",
     "sqlite3": "^5.0.2",
     "supertest": "^6.1.3",
