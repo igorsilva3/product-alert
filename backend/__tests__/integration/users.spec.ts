@@ -2,7 +2,7 @@ import { prismaMock } from '../singleton'
 import { User } from '@prisma/client'
 import faker from 'faker'
 
-const createUser = <User>() => ({
+const createUser = (): User => ({
 	id: faker.datatype.uuid(),
 	firstName: faker.name.firstName(),
 	lastName: faker.name.lastName(),
@@ -13,6 +13,19 @@ const createUser = <User>() => ({
 })
 
 describe('Router users', () => {
+	it('should create a user', async () => {
+		const user = createUser()
+
+		prismaMock.user.create.mockResolvedValue(user)
+
+		const User = 	await prismaMock.user.create({
+			data: {
+				...user
+			}
+		})
+
+		expect(user).toEqual(User)
+	})
 	it('should to list all users created', async () => {
 		prismaMock.user.findMany.mockResolvedValue([])
 		const users = await prismaMock.user.findMany()
