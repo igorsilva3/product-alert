@@ -1,7 +1,8 @@
 import { prismaMock } from '../singleton'
-import { User } from '@prisma/client'
+import { prisma, User } from '@prisma/client'
 import faker from 'faker'
 
+// Factory User
 const createUser = (): User => ({
 	id: faker.datatype.uuid(),
 	firstName: faker.name.firstName(),
@@ -12,24 +13,46 @@ const createUser = (): User => ({
 	updatedAt: faker.date.recent(),
 })
 
+const userFake = createUser()
+
 describe('Router users', () => {
 	it('should create a user', async () => {
-		const user = createUser()
+		prismaMock.user.create.mockResolvedValue(userFake)
 
-		prismaMock.user.create.mockResolvedValue(user)
-
-		const User = 	await prismaMock.user.create({
+		const user = await prismaMock.user.create({
 			data: {
-				...user
+				...createUser()
 			}
 		})
 
-		expect(user).toEqual(User)
+		expect(user).toBe(userFake)
 	})
 	it('should to list all users created', async () => {
 		prismaMock.user.findMany.mockResolvedValue([])
 		const users = await prismaMock.user.findMany()
 
-		expect(users).toMatchObject([])
+		expect(users).toEqual([])
+	})
+	it('should to list a user by passing id', async () => {
+		prismaMock.user.findUnique.mockResolvedValueOnce(userFake)
+
+		const user = await prismaMock.user.findUnique({
+			where: {
+				id: userFake.id
+			}
+		})
+
+		expect(user).toEqual(userFake)
+	})
+	it('should to delete a user', async () => {
+		prismaMock.user.delete.mockResolvedValueOnce(userFake)
+
+		const user = await prismaMock.user.delete({
+			where: {
+				id: userFake.id
+			}
+		})
+
+		expect(user).toEqual(userFake)
 	})
 })
