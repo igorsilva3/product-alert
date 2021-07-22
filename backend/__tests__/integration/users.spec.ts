@@ -1,5 +1,5 @@
 import { prismaMock } from '../singleton'
-import { prisma, User } from '@prisma/client'
+import { User } from '@prisma/client'
 import faker from 'faker'
 
 // Factory User
