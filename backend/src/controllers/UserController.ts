@@ -1,5 +1,5 @@
 import { Request, Response } from 'express'
-import { PrismaClient, User } from '@prisma/client'
+import { PrismaClient } from '@prisma/client'
 import * as Yup from 'yup'
 import { hash } from 'bcrypt'
 
@@ -54,10 +54,9 @@ class UserController {
 					products: true,
 				},
 			})
+			if (user === null) return response.status(400).json({ message: 'User not found' })
 
-			return response
-				.status(200)
-				.json(user === null ? { message: 'User not found' } : user)
+			return response.status(200).json(user)
 		} catch (error) {
 			return response.status(400).json({ error })
 		}
@@ -65,9 +64,10 @@ class UserController {
 
 	public async create(request: Request, response: Response) {
 		try {
-			const { firstName, lastName, email, password } = request.body
+			const { id, firstName, lastName, email, password } = request.body
 
 			const data = {
+				id: !id ? undefined : id,
 				firstName,
 				lastName,
 				email,
@@ -147,8 +147,6 @@ class UserController {
 			const user = await prisma.user.delete({
 				where: { id },
 			})
-
-			console.log(user)
 
 			return response.status(200).json({ message: 'User deleted successful' })
 		} catch (error) {
