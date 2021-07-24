@@ -45,6 +45,7 @@
 
     /* Module Resolution Options */
     // "moduleResolution": "node",                  /* Specify module resolution strategy: 'node' (Node.js) or 'classic' (TypeScript pre-1.6). */
+    "resolveJsonModule": true,                     /* Resolve a module name as a JSON file: 'skip' (do not resolve), 'warn' (report a warning), or 'resolve'. */
     "baseUrl": ".",                             /* Base directory to resolve non-absolute module names. */
     "paths": {
       "@controllers/*": ["./src/controllers/*"],
