@@ -6,7 +6,9 @@
   "license": "MIT",
   "scripts": {
     "start": "tsnd -r tsconfig-paths/register --transpile-only --ignore-watch node_modules src/server.ts",
-    "test": "jest"
+    "pretest": "dotenv -e ./__tests__/.env.test -- prisma migrate deploy ",
+    "test": "dotenv -e ./__tests__/.env.test -- jest -i --detectOpenHandles --forceExit",
+    "posttest": "dotenv -e ./__tests__/.env.test -- prisma migrate reset --skip-generate --force"
   },
   "devDependencies": {
     "@types/bcrypt": "^5.0.0",
@@ -17,6 +19,7 @@
     "@types/morgan": "^1.9.3",
     "@types/supertest": "^2.0.11",
     "@types/yup": "^0.29.12",
+    "dotenv-cli": "^4.0.0",
     "faker": "^5.5.3",
     "jest": "^27.0.6",
     "prisma": "^2.27.0",
