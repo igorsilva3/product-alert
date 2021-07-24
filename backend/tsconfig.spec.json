@@ -1,0 +1,16 @@
+{
+  "compilerOptions": {
+    "target": "es2017",
+    "module": "commonjs",
+    "baseUrl": "./",
+    "rootDir": "./",
+    "esModuleInterop": true,
+    "strict": true,
+    "paths": {
+      "@routes": ["<rootDir>/src/routes/index.ts"],
+      "@controllers": ["<rootDir>/src/controllers/index.ts"],
+      "@routes/*": ["<rootDir>/src/routes/*"],
+      "@controllers/*": ["<rootDir>/src/controllers/*"]
+    }
+  }
+}
