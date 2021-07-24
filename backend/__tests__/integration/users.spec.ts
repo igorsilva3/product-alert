@@ -1,6 +1,9 @@
-import { prismaMock } from '../singleton'
 import { User } from '@prisma/client'
 import faker from 'faker'
+import { agent } from 'supertest'
+import app from '../../src/app'
+
+const request = agent(app)
 
 // Factory User
 const createUser = (): User => ({
@@ -13,46 +16,35 @@ const createUser = (): User => ({
 	updatedAt: faker.date.recent(),
 })
 
-const userFake = createUser()
+const user = createUser()
 
 describe('Router users', () => {
 	it('should create a user', async () => {
-		prismaMock.user.create.mockResolvedValue(userFake)
+		const { statusCode } = await request.post('/v1/users').send(user)
 
-		const user = await prismaMock.user.create({
-			data: {
-				...createUser()
-			}
-		})
-
-		expect(user).toBe(userFake)
+		expect(statusCode).toEqual(201)
 	})
 	it('should to list all users created', async () => {
-		prismaMock.user.findMany.mockResolvedValue([])
-		const users = await prismaMock.user.findMany()
+		const { statusCode } = await request.get('/v1/users')
 
-		expect(users).toEqual([])
+		expect(statusCode).toEqual(200)
 	})
 	it('should to list a user by passing id', async () => {
-		prismaMock.user.findUnique.mockResolvedValueOnce(userFake)
+		const { statusCode } = await request.get(`/v1/users/${user.id}`)
 
-		const user = await prismaMock.user.findUnique({
-			where: {
-				id: userFake.id
-			}
-		})
+		expect(statusCode).toEqual(200)
+	})
+	it('should to update a user by passing id', async () => {
+		user.firstName = faker.name.firstName()
+		user.email = faker.internet.email()
 
-		expect(user).toEqual(userFake)
+		const { statusCode } = await request.put(`/v1/users/${user.id}`).send(user)
+
+		expect(statusCode).toEqual(200)
 	})
 	it('should to delete a user', async () => {
-		prismaMock.user.delete.mockResolvedValueOnce(userFake)
+		const { statusCode } = await request.delete(`/v1/users/${user.id}`)
 
-		const user = await prismaMock.user.delete({
-			where: {
-				id: userFake.id
-			}
-		})
-
-		expect(user).toEqual(userFake)
+		expect(statusCode).toEqual(200)
 	})
 })
