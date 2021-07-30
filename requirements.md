@@ -4,7 +4,7 @@ Requisitos
 # Requisitos funcionais
 
 - [x] CRUD de usuarios
-- [] CRUD de produtos
+- [x] CRUD de produtos
 - [x] Relacionamento de usuarios com produtos
 - [] Autenticação de usuarios
 - [] Recuperação de senha
