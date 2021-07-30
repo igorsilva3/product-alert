@@ -1,21 +1,11 @@
-import { User } from '@prisma/client'
 import faker from 'faker'
 import { agent } from 'supertest'
 import app from '../../src/app'
+import { createUser } from '../utils/factories'
 
 const request = agent(app)
 
-// Factory User
-const createUser = (): User => ({
-	id: faker.datatype.uuid(),
-	firstName: faker.name.firstName(),
-	lastName: faker.name.lastName(),
-	email: faker.internet.email(),
-	password: faker.internet.password(),
-	createdAt: faker.date.recent(),
-	updatedAt: faker.date.recent(),
-})
-
+// Create a user
 const user = createUser()
 
 describe('Router users', () => {
