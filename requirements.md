@@ -8,6 +8,8 @@ Requisitos
 - [x] Relacionamento de usuarios com produtos
 - [] Autenticação de usuarios
 - [] Recuperação de senha
+- [] Filtro de produtos por data de validade
+- [] Filtro de produtos por companhia
 - [] Relatorio dos produtos com validade recentes
 - [] Enviar relatorio por whatsapp
 - [] Enviar relatorio por email
