@@ -30,9 +30,15 @@ class UserController {
 				},
 			})
 
+			if (!users || users.length === 0) throw new Error('Users not found')
+
 			return response.status(200).json(users)
 		} catch (error) {
-			return response.status(400).json({ error })
+			return response.status(400).json({
+				error: {
+					message: error.message,
+				},
+			})
 		}
 	}
 
@@ -54,11 +60,15 @@ class UserController {
 					products: true,
 				},
 			})
-			if (user === null) return response.status(400).json({ message: 'User not found' })
+			if (!user || user === null) throw new Error('User not found')
 
 			return response.status(200).json(user)
 		} catch (error) {
-			return response.status(400).json({ error })
+			return response.status(400).json({
+				error: {
+					message: error.message,
+				},
+			})
 		}
 	}
 
@@ -91,10 +101,14 @@ class UserController {
 				},
 			})
 
+			if (!user || user === null) throw new Error('User not created')
+
 			return response.status(201).json(user)
 		} catch (error) {
 			return response.status(400).json({
-				error: error instanceof Yup.ValidationError ? error.errors : error,
+				error: {
+					message: error instanceof Yup.ValidationError ? error.errors : error.message,
+				}
 			})
 		}
 	}
@@ -128,14 +142,17 @@ class UserController {
 					createdAt: true,
 					updatedAt: true,
 					products: true,
-				},
+				}
 			})
+
+			if (!user || user === null) throw new Error('User not updated')
 
 			return response.status(200).json(user)
 		} catch (error) {
-			console.error(error)
 			return response.status(400).json({
-				error: error instanceof Yup.ValidationError ? error.errors : error,
+				error: {
+					message: error instanceof Yup.ValidationError ? error.errors : error.message,
+				}
 			})
 		}
 	}
@@ -148,9 +165,15 @@ class UserController {
 				where: { id },
 			})
 
+			if (!user || user === null) throw new Error('User not deleted')
+
 			return response.status(200).json({ message: 'User deleted successful' })
 		} catch (error) {
-			return response.status(400).json({ error })
+			return response.status(400).json({
+				error: {
+					message: error.message,
+				}
+			})
 		}
 	}
 }

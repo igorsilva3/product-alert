@@ -24,9 +24,16 @@ class ProductController {
 				},
 			})
 
+			if (!products || products.length === 0)
+				throw new Error('Products not found')
+
 			return response.status(200).json(products)
 		} catch (error) {
-			return response.status(400).json({ error })
+			return response.status(400).json({
+				error: {
+					message: error.message,
+				},
+			})
 		}
 	}
 
@@ -37,12 +44,15 @@ class ProductController {
 				where: { id },
 			})
 
-			if (product === null)
-				return response.status(404).json({ message: 'User not found' })
+			if (!product || product === null) throw new Error('Product not found')
 
 			return response.status(200).json(product)
 		} catch (error) {
-			return response.status(400).json({ error })
+			return response.status(400).json({
+				error: {
+					message: error.message,
+				},
+			})
 		}
 	}
 
@@ -67,10 +77,15 @@ class ProductController {
 				data,
 			})
 
+			if (!product || product === null) throw new Error('Product not created')
+
 			return response.status(201).json(product)
 		} catch (error) {
 			return response.status(400).json({
-				error: error instanceof Yup.ValidationError ? error.errors : error,
+				error: {
+					message:
+						error instanceof Yup.ValidationError ? error.errors : error.message,
+				},
 			})
 		}
 	}
@@ -98,6 +113,8 @@ class ProductController {
 				data,
 			})
 
+			if (!product || product === null) throw new Error('Product not updated')
+
 			return response.status(200).json(product)
 		} catch (error) {
 			return response.status(400).json({
@@ -110,13 +127,21 @@ class ProductController {
 		try {
 			const { id } = request.params
 
-			await prisma.product.delete({
+			const product = await prisma.product.delete({
 				where: { id },
 			})
 
-			return response.status(200).json({ message: 'Product deleted successful' })
+			if (!product || product === null) throw new Error('Product not deleted')
+
+			return response
+				.status(200)
+				.json({ message: 'Product deleted successful' })
 		} catch (error) {
-			return response.status(400).json({ error })
+			return response.status(400).json({
+				error: {
+					message: error.message,
+				},
+			})
 		}
 	}
 }
