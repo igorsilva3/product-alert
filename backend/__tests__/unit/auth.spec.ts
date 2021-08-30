@@ -12,11 +12,24 @@ describe('Authenticate a user', () => {
 		expect(statusCode).toEqual(201)
 	})
 	it('should get a token', async () => {
-		const { statusCode } = await request.post('/v1/auth/').send({
+		const { statusCode, body } = await request.post('/v1/auth/').send({
 			email: user.email,
 			password: user.password,
 		})
 
-		expect(statusCode).toEqual(200)
+		expect({ statusCode, body }).toEqual({
+			statusCode: 200,
+			body: {
+				user: {
+					id: expect.any(String),
+					firstName: expect.any(String),
+					lastName: expect.any(String),
+					email: expect.any(String),
+					createdAt: expect.any(String),
+					updatedAt: expect.any(String),
+				},
+				token: expect.any(String),
+			},
+		})
 	})
 })

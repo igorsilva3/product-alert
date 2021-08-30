@@ -1,7 +1,10 @@
 import { Request, Response } from 'express'
 import { PrismaClient } from '@prisma/client'
 import { compare } from 'bcrypt'
+import { sign } from 'jsonwebtoken'
 import * as Yup from 'yup'
+
+import { env } from '../env'
 
 const prisma = new PrismaClient()
 
@@ -34,6 +37,13 @@ class AuthController {
       if (!user && !isValidPassword) {
         throw new Error('User does not exist!')
       }
+      // get secret key
+      const secretKey = env("SECRET_KEY")
+
+      // generate token
+      const token = sign({ id: user?.id }, String(secretKey), {
+        expiresIn: '15m',
+      })
 
       return response.status(200).json({
         user: {
@@ -44,7 +54,7 @@ class AuthController {
           createdAt: user?.createdAt,
           updatedAt: user?.updatedAt
         },
-        token: 'test_abcd'
+        token
       })
 
     } catch (error) {
