@@ -6,9 +6,14 @@
   "license": "MIT",
   "scripts": {
     "start": "dotenv -e ./.env -- tsnd -r tsconfig-paths/register --transpile-only --ignore-watch node_modules src/server.ts",
-    "pretest": "dotenv -e ./__tests__/.env.test -- prisma migrate deploy ",
+    "pretest": "dotenv -e ./__tests__/.env.test prisma migrate deploy && yarn prisma:seed:test",
     "test": "dotenv -e ./__tests__/.env.test -- jest -i --detectOpenHandles --forceExit",
-    "posttest": "dotenv -e ./__tests__/.env.test -- prisma migrate reset --skip-generate --force"
+    "posttest": "dotenv -e ./__tests__/.env.test -- prisma migrate reset --skip-generate --force",
+    "prisma:studio:test": "dotenv -e ./__tests__/.env.test -- prisma studio",
+    "prisma:seed:test": "dotenv -e ./__tests__/.env.test -- prisma db seed"
+  },
+  "prisma": {
+    "seed": "tsnd prisma/seed.ts"
   },
   "devDependencies": {
     "@types/bcrypt": "^5.0.0",
@@ -23,8 +28,7 @@
     "dotenv-cli": "^4.0.0",
     "faker": "^5.5.3",
     "jest": "^27.0.6",
-    "prisma": "^2.29.1",
-    "sqlite3": "^5.0.2",
+    "prisma": "^3.1.1",
     "supertest": "^6.1.3",
     "ts-jest": "^27.0.3",
     "ts-node-dev": "^1.1.8",
@@ -32,7 +36,7 @@
     "typescript": "^4.3.5"
   },
   "dependencies": {
-    "@prisma/client": "^2.29.1",
+    "@prisma/client": "^3.1.1",
     "bcrypt": "^5.0.1",
     "cors": "^2.8.5",
     "express": "^4.17.1",
