@@ -8,7 +8,7 @@
     "start": "dotenv -e ./.env -- tsnd -r tsconfig-paths/register --transpile-only --ignore-watch node_modules src/server.ts",
     "pretest": "dotenv -e ./__tests__/.env.test prisma migrate deploy && yarn prisma:seed:test",
     "test": "dotenv -e ./__tests__/.env.test -- jest -i --detectOpenHandles --forceExit",
-    "posttest": "dotenv -e ./__tests__/.env.test -- prisma migrate reset --skip-generate --force",
+    "posttest": "dotenv -e ./__tests__/.env.test -- prisma migrate reset --skip-generate --skip-seed --force ",
     "prisma:studio:test": "dotenv -e ./__tests__/.env.test -- prisma studio",
     "prisma:seed:test": "dotenv -e ./__tests__/.env.test -- prisma db seed"
   },
