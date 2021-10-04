@@ -53,7 +53,8 @@
       "@routes/*": ["./src/routes/*"],
       "@routes": ["./src/routes"],
       "@middlewares": ["./src/middlewares"],
-      "@middlewares/*": ["./src/middlewares/*"]
+      "@middlewares/*": ["./src/middlewares/*"],
+      "@services/*": ["./src/services/*"]
     },                                 /* A series of entries which re-map imports to lookup locations relative to the 'baseUrl'. */
     // "rootDirs": [],                              /* List of root folders whose combined content represents the structure of the project at runtime. */
     // "typeRoots": [],                             /* List of folders to include type definitions from. */

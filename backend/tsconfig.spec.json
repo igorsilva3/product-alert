@@ -12,7 +12,8 @@
       "@routes/*": ["<rootDir>/src/routes/*"],
       "@controllers/*": ["<rootDir>/src/controllers/*"],
       "@middlewares": ["<rootDir>/src/middlewares"],
-      "@middlewares/*": ["<rootDir>/src/middlewares/*"]
+      "@middlewares/*": ["<rootDir>/src/middlewares/*"],
+      "@services/*": ["<rootDir>/src/services/*"]
     }
   }
 }
